@@ -27,7 +27,7 @@ BIN  = $(CP) -O binary -S
 LD = $(PREFIX)-ld
 
 # Specify CPU flag
-CPU = -m2 -mb
+CPU = -mb -mrenesas
 
 # Common compiler flags
 #OPT = -Os
