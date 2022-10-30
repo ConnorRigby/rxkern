@@ -1,7 +1,7 @@
 # cmake tool chain for crosscompiling on a linux host.
 # This may be fragile; frankenstein'd from a few different projects
 
-set(TOOLCHAIN_BASE sh-elf)
+set(TOOLCHAIN_BASE sh-unknown-elf)
 
 # where is the target environment
 set (CMAKE_FIND_ROOT_PATH /usr/${TOOLCHAIN_BASE})
@@ -25,6 +25,7 @@ set(CMAKE_SYSTEM_PROCESSOR sh)
 
 set(CMAKE_C_COMPILER "${TOOLCHAIN_BIN_DIR}/${TOOLCHAIN_BASE}-gcc" CACHE INTERNAL "")
 set(CMAKE_CXX_COMPILER "${TOOLCHAIN_BIN_DIR}/${TOOLCHAIN_BASE}-g++" CACHE INTERNAL "")
+set(CMAKE_OBJCOPY "${TOOLCHAIN_BIN_DIR}/${TOOLCHAIN_BASE}-objcopy" CACHE INTERNAL "")
 set(CMAKE_EXE_LINKER_FLAGS "" CACHE INTERNAL "")
 
 set (CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
