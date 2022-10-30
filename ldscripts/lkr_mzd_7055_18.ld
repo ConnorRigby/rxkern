@@ -46,9 +46,7 @@ ENTRY(RAMjump_entry)
 /* Memory areas, areas common to 7055 and 7058 */
 MEMORY {
 	RAM (xw)	: ORIGIN = 0xFFFF6000, LENGTH = 24K
-/*	RMETA (xr) : ORIGIN = 0xFFFF8000, LENGTH = 64*/
-	/* skip the area @ FFFF8000 because there's some metadata copied there */
-	RJFIX (xw)	: ORIGIN = 0xffffa000, LENGTH = 24K
+	RJFIX (xw)	: ORIGIN = 0xffffa000, LENGTH = 8K
 
 }
 REGION_ALIAS("TGT", RJFIX);
@@ -62,7 +60,7 @@ SECTIONS
 	/* program code and other data */
 	.text :
 	{
-		_rja_start = .;	/* where the whole payload must be moved */
+		_rja_start  = .;
 		. = ALIGN(4);
 		*(.rja)
 		*(.text)           /* .text sections (code) */

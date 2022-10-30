@@ -96,6 +96,13 @@
 	#else
 		#error invalid target for ssmk
 	#endif
+#elif defined(mzd)
+        #define WDT_MAXCNT 4125
+        #include "reg_defines/7055_7058_180nm.h"
+	#define RAM_MIN 0xffff6000
+	#define RAM_MAX 0xffffdfff
+#else
+#error Invalid Target!
 #endif
 
 

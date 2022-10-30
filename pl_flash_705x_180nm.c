@@ -96,6 +96,11 @@
 		#define FL_ERASE_BASE	0xFFFF8000
 		#define FL_WRITE_BASE	0xFFFF8800
 
+	#elif defined(mzd)
+		#define FTDAR_ERASE 0x04
+		#define FTDAR_WRITE 0x05
+		#define FL_ERASE_BASE 0xffff6000
+		#define FL_WRITE_BASE 0xffff6800
 	#endif
 
 	#define FL_MAXROM	(512*1024UL - 1UL)

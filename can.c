@@ -20,14 +20,19 @@ uint FUN_ffffb634(uint param_1,uint param_2,char *param_3,char *param_4)
 void can_tx(char *payload)
 
 {
-  ushort uVar1;
-  
+//  ushort uVar1 = 0xff;
+  while((*((ushort*)0xffffe406) & 0x80) != 0) {} 
+ /* 
   do {
-    uVar1 = HCAN0.TXPR1.WORD;
+    uVar1 = *((ushort*)0xffffe406);
+    //uVar1 = *HCAN0.TXPR1.WORD;
   } while ((uVar1 & 0x80) != 0);
-  HCAN0.TXACK1.WORD = 0x80;
+*/
+  //HCAN0.TXACK1.WORD = 0x80;
+  *(ushort*)0xffffe40a = 0x80;
   FUN_ffffb634(8, 0, payload, (char*)0xffffe528);
-  HCAN0.TXPR1.WORD = 0x80;
+  //HCAN0.TXPR1.WORD = 0x80;
+  *(ushort*)0xffffe406 = 0x80;
   return;
 }
 

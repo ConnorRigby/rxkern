@@ -31,12 +31,14 @@
 #include "platf.h"
 #include "wdt.h"
 
+#ifdef NPK_SCI
 /* init SCI to continue comms on K line */
 static void init_sci(void) {
 	NPK_SCI.SCR.BYTE &= 0x2F;	//clear TXIE, RXIE, RE
 	NPK_SCI.SCR.BIT.TE = 1;	//enable TX
 	return;
 }
+#endif
 
 
 /******* Interrupt stuff */
@@ -198,7 +200,9 @@ void init_platf(void) {
 	ATU.TSTR3.BYTE = 0;
 
 	init_mclk();
+#ifdef NPK_SCI
 	init_sci();
+#endif
 	init_wdt();
 }
 

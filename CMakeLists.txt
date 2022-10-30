@@ -22,8 +22,8 @@ endif ()
 
 ###### add some CFLAGS
 
-set(CPU_FLAGS "-mb -m1 -mrenesas")
-set(OPT_FLAGS "-Os -ffunction-sections")
+set(CPU_FLAGS "-mb -m2 -mrenesas")
+set(OPT_FLAGS "-Og -ffunction-sections")
 
 # removed -pedantic from cflags because we have conversions from u32 to function-pointers which are "problematic"
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${CPU_FLAGS} ${OPT_FLAGS} -Wall -Wextra -Wformat -std=gnu11 \
@@ -44,11 +44,12 @@ add_custom_target(version_h BYPRODUCTS "${CMAKE_CURRENT_BINARY_DIR}/version.h"
 		-P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/gitversion.cmake
 )
 
-set (COMMON_SRCS cmd_parser.c eep_funcs.c main.c crc.c wdt.c
+set (COMMON_SRCS main.c crc.c wdt.c
 	${CMAKE_CURRENT_BINARY_DIR}/version.h
 	)
 
 set (NISSAN_SRCS ${COMMON_SRCS} mfg_nissan.c start_705x.s)
+set (MZD_SRCS ${COMMON_SRCS} mfg_mzd.c can.c start_mzd.s)
 set (SUBARU_SRCS ${COMMON_SRCS} mfg_ssm.c start_ssm.s)
 
 ## objcopy to produce .bin file
@@ -88,20 +89,19 @@ endfunction()
 
 #add_executable(npk_SH7051 ${NISSAN_SRCS} platf_7050.c pl_flash_7051.c)
 #add_executable(npk_SH7055_35 ${NISSAN_SRCS} platf_7055.c pl_flash_7055_350nm.c)
-add_executable(npk_SH7055_18 ${NISSAN_SRCS} platf_7055.c pl_flash_705x_180nm.c can.c)
+#add_executable(npk_SH7055_18 ${NISSAN_SRCS} platf_7055.c pl_flash_705x_180nm.c can.c)
 #add_executable(npk_SH7058 ${NISSAN_SRCS} platf_7055.c pl_flash_705x_180nm.c)
 #add_executable(ssmk_SH7058 ${SUBARU_SRCS} platf_7055.c pl_flash_705x_180nm.c)
 #add_executable(ssmk_SH7055_18 ${SUBARU_SRCS} platf_7055.c pl_flash_705x_180nm.c)
-
+add_executable(mzd_SH7055_18 ${MZD_SRCS} platf_7055.c pl_flash_705x_180nm.c)
 
 # Select proper linker script
 #target_link_options(npk_SH7051 PRIVATE -T ${CMAKE_SOURCE_DIR}/ldscripts/lkr_7051.ld)
 #target_link_options(npk_SH7055_35 PRIVATE -T ${CMAKE_SOURCE_DIR}/ldscripts/lkr_7055_7058.ld)
-target_link_options(npk_SH7055_18 PRIVATE -T ${CMAKE_SOURCE_DIR}/ldscripts/lkr_mzd_7055_18.ld)
 #target_link_options(npk_SH7058 PRIVATE -T ${CMAKE_SOURCE_DIR}/ldscripts/lkr_7055_7058.ld)
 #target_link_options(ssmk_SH7058 PRIVATE -T ${CMAKE_SOURCE_DIR}/ldscripts/lkr_subaru_7058.ld)
 #target_link_options(ssmk_SH7055_18 PRIVATE -T ${CMAKE_SOURCE_DIR}/ldscripts/lkr_subaru_7055_18.ld)
-
+target_link_options(mzd_SH7055_18 PRIVATE -T ${CMAKE_SOURCE_DIR}/ldscripts/lkr_mzd_7055_18.ld)
 
 ## Add all Nissan targets here
 set(TGT_LIST "SH7051" "SH7055_35" "SH7055_18" "SH7058")
@@ -109,7 +109,7 @@ set(TGT_LIST "SH7051" "SH7055_35" "SH7055_18" "SH7058")
 foreach (TGTNAME IN LISTS TGT_LIST)
 	#add_kernel(npk ${TGTNAME})
 endforeach()
-add_kernel(npk SH7055_18)
+add_kernel(mzd SH7055_18)
 ## Add Subaru kernel target
 
 #add_kernel(ssmk SH7058)
