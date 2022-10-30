@@ -22,7 +22,7 @@ endif ()
 
 ###### add some CFLAGS
 
-set(CPU_FLAGS "-mb -m2 -mrenesas")
+set(CPU_FLAGS "-mb -m1 -mrenesas")
 set(OPT_FLAGS "-Os -ffunction-sections")
 
 # removed -pedantic from cflags because we have conversions from u32 to function-pointers which are "problematic"
