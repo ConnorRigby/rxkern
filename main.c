@@ -23,8 +23,7 @@
 
 #include "mfg.h"
 #include "platf.h"
-#include "cmd_parser.h"
-   
+#include "can.h"
 
 void main(void) {
 	set_imask(0x0F);	// disable interrupts (mask = b'1111)
@@ -34,9 +33,10 @@ void main(void) {
 
 	/* and lower prio mask to let WDT run */
 	set_imask(0x07);
-
-	cmd_init(SCI_DEFAULTDIV);
-	cmd_loop();
+	char payload[8] = {0xD, 0xE, 0xA, 0xD, 0xB, 0xE, 0xE, 0xF};
+        do {
+	   can_tx(payload);
+	} while(1);
 
 	//we should never get here; if so : die
 	die();
