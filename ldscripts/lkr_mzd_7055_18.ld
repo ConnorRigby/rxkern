@@ -41,7 +41,7 @@ LOADADDR(section) returns the LMA of <section>
 
 
 /* Entry Point */
-ENTRY(RAMjump_entry)
+ENTRY(_main)
 
 /* Memory areas, areas common to 7055 and 7058 */
 MEMORY {
@@ -93,7 +93,7 @@ SECTIONS
 		_idatalen = . - _sdata;
 	} >TGT
 
-ASSERT(_sdata == _edata, "unhandled initialized data !")
+/* ASSERT(_sdata == _edata, "unhandled initialized data !") */
 
 	/* Uninitialized data section */
 	. = ALIGN(4);

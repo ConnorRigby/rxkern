@@ -25,15 +25,26 @@
 #include "platf.h"
 #include "can.h"
 
+char* payload = (char*)0xffff6000;
 void main(void) {
+	//char payload[8] = {0xD, 0xE, 0xA, 0xD, 0xB, 0xE, 0xE, 0xF};
 	set_imask(0x0F);	// disable interrupts (mask = b'1111)
 
-	init_mfg();
-	init_platf();
+	//init_mfg();
+	//init_platf();
 
 	/* and lower prio mask to let WDT run */
-	set_imask(0x07);
-	char payload[8] = {0xD, 0xE, 0xA, 0xD, 0xB, 0xE, 0xE, 0xF};
+	//set_imask(0x07);
+	
+	payload[0] = 0xd;
+	payload[1] = 0xe;
+	payload[2] = 0xa;
+	payload[3] = 0xd;
+	payload[4] = 0xb;
+	payload[5] = 0xe;
+	payload[6] = 0xe;
+	payload[7] = 0xf;
+
         do {
 	   can_tx(payload);
 	} while(1);

@@ -23,7 +23,7 @@ endif ()
 ###### add some CFLAGS
 
 set(CPU_FLAGS "-mb -m2 -mrenesas")
-set(OPT_FLAGS "-Og -ffunction-sections")
+set(OPT_FLAGS "-ffunction-sections")
 
 # removed -pedantic from cflags because we have conversions from u32 to function-pointers which are "problematic"
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${CPU_FLAGS} ${OPT_FLAGS} -Wall -Wextra -Wformat -std=gnu11 \
@@ -49,7 +49,7 @@ set (COMMON_SRCS main.c crc.c wdt.c
 	)
 
 set (NISSAN_SRCS ${COMMON_SRCS} mfg_nissan.c start_705x.s)
-set (MZD_SRCS ${COMMON_SRCS} mfg_mzd.c can.c start_mzd.s)
+set (MZD_SRCS ${COMMON_SRCS} mfg_mzd.c can.c )
 set (SUBARU_SRCS ${COMMON_SRCS} mfg_ssm.c start_ssm.s)
 
 ## objcopy to produce .bin file

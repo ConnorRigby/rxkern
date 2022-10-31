@@ -31,15 +31,22 @@
 	.extern _stackinit
 	.extern _endpayload
 
-RAMjump_entry: 
-		.long _main
-	!mov.l	main,r1
-	!mov.l	stack,r15
-	!jsr     @r1
-	!nop
-!DieForever:
-	!bsr DieForever
-	!nop
+RAMjump_entry:
+	mov.w @r13 => 0xffffe406,r2
+	extu.w r2,r2
+	tst r14,r2
+	bf RAMjump_entry
+	mov.w @(ffffa3a2,pc),r1
+	mov.w r14,@r1=>0xffffe40a
+	mov.w @(ffffa3a4,pc),r7=ffffe528
+	mov #0x0,r5
+	mov.l @(->Can_TX,pc),r3
+	mov.l @r15=>,r6
+	jsr @r3=>CAN_TX
+	mov #0x8,payload
+	mov.w r14,@r13=>0xffffe406
+	add 0x4,r15
+	lds.l @r15=>local_c+,pr
 
 	.BALIGN 4
 stack:

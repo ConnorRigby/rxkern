@@ -1,7 +1,7 @@
 # cmake tool chain for crosscompiling on a linux host.
 # This may be fragile; frankenstein'd from a few different projects
 
-set(TOOLCHAIN_BASE sh-unknown-elf)
+set(TOOLCHAIN_BASE sh2-elf)
 
 # where is the target environment
 set (CMAKE_FIND_ROOT_PATH /usr/${TOOLCHAIN_BASE})
